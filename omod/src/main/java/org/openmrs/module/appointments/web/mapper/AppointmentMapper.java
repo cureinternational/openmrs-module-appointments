@@ -12,6 +12,7 @@ import org.openmrs.api.LocationService;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.ProviderService;
 import org.openmrs.api.context.Context;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.appointments.model.Appointment;
 import org.openmrs.module.appointments.model.AppointmentKind;
 import org.openmrs.module.appointments.model.AppointmentReason;
@@ -369,6 +370,7 @@ public class AppointmentMapper {
 
     private Map createPatientMap(Patient p) {
         Map map = new HashMap();
+        Map<String, String> customAttributesMap = mapAttributeTypes(p);
         Map<String, String> customAttributesMap = mapAttributeTypes(p);
         map.put("name", p.getPersonName().getFullName());
         map.put("uuid", p.getUuid());
