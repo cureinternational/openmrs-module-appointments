@@ -133,6 +133,11 @@ public class AppointmentsServiceImplTest {
     @Mock
     private AppointmentNumberGeneratorLocator appointmentNumberGeneratorLocator;
 
+    @Mock
+    private AdministrationService administrationService;
+
+    @Mock
+    private UserContext userContext;
     @InjectMocks
     private AppointmentsServiceImpl appointmentsService;
 
@@ -525,12 +530,28 @@ public class AppointmentsServiceImplTest {
         ArrayList<Appointment> expectedAppointments = new ArrayList<>();
         when(Context.getAdministrationService()).thenReturn(administrationService);
         when(administrationService.getGlobalProperty("webservices.rest.maxResultsDefault")).thenReturn("20");
+        when(Context.getAdministrationService()).thenReturn(administrationService);
+        when(administrationService.getGlobalProperty("webservices.rest.maxResultsDefault")).thenReturn("20");
         when(appointmentDao.search(appointmentSearchRequest)).thenReturn(expectedAppointments);
 
         List<Appointment> actualAppointments = appointmentsService.search(appointmentSearchRequest);
 
         verify(appointmentDao, times(1)).search(appointmentSearchRequest);
         assertEquals(expectedAppointments, actualAppointments);
+    }
+
+    @Test
+    public void shouldNotCallSearchMethodInAppointmentDaoAndReturnNullWhenStartDateIsNull() {
+        AppointmentSearchRequest appointmentSearchRequest = new AppointmentSearchRequest();
+        Date endDate = Date.from(Instant.now());
+        appointmentSearchRequest.setStartDate(null);
+        appointmentSearchRequest.setEndDate(endDate);
+        when(Context.getAdministrationService()).thenReturn(administrationService);
+        when(administrationService.getGlobalProperty("webservices.rest.maxResultsDefault")).thenReturn("20");
+        List<Appointment> actualAppointments = appointmentsService.search(appointmentSearchRequest);
+
+        verify(appointmentDao, never()).search(appointmentSearchRequest);
+        assertNull(actualAppointments);
     }
 
     @Test
@@ -542,6 +563,8 @@ public class AppointmentsServiceImplTest {
 
         ArrayList<Appointment> expectedAppointments = new ArrayList<>();
         when(appointmentDao.search(appointmentSearchRequest)).thenReturn(expectedAppointments);
+        when(Context.getAdministrationService()).thenReturn(administrationService);
+        when(administrationService.getGlobalProperty("webservices.rest.maxResultsDefault")).thenReturn("20");
         when(Context.getAdministrationService()).thenReturn(administrationService);
         when(administrationService.getGlobalProperty("webservices.rest.maxResultsDefault")).thenReturn("20");
         List<Appointment> actualAppointments = appointmentsService.search(appointmentSearchRequest);
@@ -791,7 +814,12 @@ public class AppointmentsServiceImplTest {
 
     @Test
     public void shouldGetAppointmentsWithoutDates() {
+    public void shouldGetAppointmentsWithoutDates() {
         AppointmentSearchRequestModel searchQuery = new AppointmentSearchRequestModel();
+        when(Context.getAdministrationService()).thenReturn(administrationService);
+        when(administrationService.getGlobalProperty("webservices.rest.maxResultsDefault")).thenReturn("20");
+        appointmentsService.searchAppointmentsWithoutDates(searchQuery);
+        verify(appointmentDao, times(1)).getAppointmentsWithoutDates(searchQuery, 20);
         when(Context.getAdministrationService()).thenReturn(administrationService);
         when(administrationService.getGlobalProperty("webservices.rest.maxResultsDefault")).thenReturn("20");
         appointmentsService.searchAppointmentsWithoutDates(searchQuery);

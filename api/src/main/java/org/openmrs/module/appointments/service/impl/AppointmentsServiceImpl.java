@@ -331,6 +331,12 @@ public class AppointmentsServiceImpl implements AppointmentsService {
                 appointmentSearchRequest.setLimit(Integer.parseInt(limit));
             }
         }
+        if (!isNull(appointmentSearchRequest.getLimit())) {
+            String limit = Context.getAdministrationService().getGlobalProperty("webservices.rest.maxResultsDefault");
+            if (StringUtils.isNotEmpty(limit)) {
+                appointmentSearchRequest.setLimit(Integer.parseInt(limit));
+            }
+        }
         return appointmentDao.search(appointmentSearchRequest);
     }
 
