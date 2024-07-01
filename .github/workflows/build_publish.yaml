@@ -2,6 +2,7 @@ name: Build and Publish package
 on:
   push:
     branches: [ Bahmni-IPD-master ]
+  workflow_dispatch:
 
 jobs:
   Trivy:
@@ -24,11 +25,26 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-          server-id: nexus-sonatype
-          server-username: NEXUS_USERNAME
-          server-password: NEXUS_PASSWORD
       - name: Build and deploy with Maven
-        run: ./mvnw --no-transfer-progress clean -U deploy
+        run: ./mvnw --no-transfer-progress clean -U package -DskipTests
+     
+      - name: Create GitHub release
+        id: create_release
+        uses: actions/create-release@v1
         env:
-          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            tag_name: v1.8.0.omod-${{ github.run_number }}
+            release_name: Release-v1.8.0.omod-${{ github.run_number }}
+            draft: false
+            prerelease: false
+
+      - name: Upload SNAPSHOT.omod to release
+        uses: actions/upload-release-asset@v1
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            upload_url: ${{ steps.create_release.outputs.upload_url }}
+            asset_path: omod/target/appointments-1.8.0-SNAPSHOT.omod
+            asset_name: appointments-1.8.0-SNAPSHOT.omod
+            asset_content_type: application/octet-stream
