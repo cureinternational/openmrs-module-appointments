@@ -324,12 +324,8 @@ public class AppointmentsServiceImpl implements AppointmentsService {
     @Transactional
     @Override
     public List<Appointment> search(AppointmentSearchRequest appointmentSearchRequest) {
-
-        if (!isNull(appointmentSearchRequest.getLimit())) {
-            String limit = Context.getAdministrationService().getGlobalProperty("webservices.rest.maxResultsDefault");
-            if (StringUtils.isNotEmpty(limit)) {
-                appointmentSearchRequest.setLimit(Integer.parseInt(limit));
-            }
+        if (appointmentSearchRequest.getStartDate() == null && appointmentSearchRequest.getEndDate() != null) {
+            return null;
         }
         if (!isNull(appointmentSearchRequest.getLimit())) {
             String limit = Context.getAdministrationService().getGlobalProperty("webservices.rest.maxResultsDefault");

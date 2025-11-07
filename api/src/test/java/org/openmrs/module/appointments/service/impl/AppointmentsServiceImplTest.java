@@ -132,12 +132,6 @@ public class AppointmentsServiceImplTest {
 
     @Mock
     private AppointmentNumberGeneratorLocator appointmentNumberGeneratorLocator;
-
-    @Mock
-    private AdministrationService administrationService;
-
-    @Mock
-    private UserContext userContext;
     @InjectMocks
     private AppointmentsServiceImpl appointmentsService;
 
@@ -814,12 +808,7 @@ public class AppointmentsServiceImplTest {
 
     @Test
     public void shouldGetAppointmentsWithoutDates() {
-    public void shouldGetAppointmentsWithoutDates() {
         AppointmentSearchRequestModel searchQuery = new AppointmentSearchRequestModel();
-        when(Context.getAdministrationService()).thenReturn(administrationService);
-        when(administrationService.getGlobalProperty("webservices.rest.maxResultsDefault")).thenReturn("20");
-        appointmentsService.searchAppointmentsWithoutDates(searchQuery);
-        verify(appointmentDao, times(1)).getAppointmentsWithoutDates(searchQuery, 20);
         when(Context.getAdministrationService()).thenReturn(administrationService);
         when(administrationService.getGlobalProperty("webservices.rest.maxResultsDefault")).thenReturn("20");
         appointmentsService.searchAppointmentsWithoutDates(searchQuery);
