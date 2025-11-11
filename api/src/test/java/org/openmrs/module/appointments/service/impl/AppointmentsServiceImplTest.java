@@ -524,8 +524,6 @@ public class AppointmentsServiceImplTest {
         ArrayList<Appointment> expectedAppointments = new ArrayList<>();
         when(Context.getAdministrationService()).thenReturn(administrationService);
         when(administrationService.getGlobalProperty("webservices.rest.maxResultsDefault")).thenReturn("20");
-        when(Context.getAdministrationService()).thenReturn(administrationService);
-        when(administrationService.getGlobalProperty("webservices.rest.maxResultsDefault")).thenReturn("20");
         when(appointmentDao.search(appointmentSearchRequest)).thenReturn(expectedAppointments);
 
         List<Appointment> actualAppointments = appointmentsService.search(appointmentSearchRequest);
@@ -557,8 +555,6 @@ public class AppointmentsServiceImplTest {
 
         ArrayList<Appointment> expectedAppointments = new ArrayList<>();
         when(appointmentDao.search(appointmentSearchRequest)).thenReturn(expectedAppointments);
-        when(Context.getAdministrationService()).thenReturn(administrationService);
-        when(administrationService.getGlobalProperty("webservices.rest.maxResultsDefault")).thenReturn("20");
         when(Context.getAdministrationService()).thenReturn(administrationService);
         when(administrationService.getGlobalProperty("webservices.rest.maxResultsDefault")).thenReturn("20");
         List<Appointment> actualAppointments = appointmentsService.search(appointmentSearchRequest);
