@@ -26,7 +26,6 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.appointments.model.Appointment;
 import org.openmrs.module.appointments.model.AppointmentKind;
 import org.openmrs.module.appointments.model.AppointmentPriority;
-import org.openmrs.module.appointments.model.AppointmentPriority;
 import org.openmrs.module.appointments.model.AppointmentProvider;
 import org.openmrs.module.appointments.model.AppointmentProviderResponse;
 import org.openmrs.module.appointments.model.AppointmentRecurringPattern;
