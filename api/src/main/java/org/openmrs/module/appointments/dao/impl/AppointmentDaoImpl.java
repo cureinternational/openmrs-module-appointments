@@ -239,6 +239,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
     @Override
     public List<Appointment> getAppointmentsWithoutDates(AppointmentSearchRequestModel searchQuery, Integer limit) {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Appointment.class);
+        addSearchCriteria(criteria, searchQuery);
         criteria.add(Restrictions.isNull("startDateTime"));
         criteria.add(Restrictions.isNull("endDateTime"));
         criteria.addOrder(Order.asc("dateCreated"));
