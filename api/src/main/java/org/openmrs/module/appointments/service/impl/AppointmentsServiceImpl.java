@@ -324,7 +324,7 @@ public class AppointmentsServiceImpl implements AppointmentsService {
     @Transactional
     @Override
     public List<Appointment> search(AppointmentSearchRequest appointmentSearchRequest) {
-        if (appointmentSearchRequest.getStartDate() == null && appointmentSearchRequest.getEndDate() != null) {
+         if (isNull(appointmentSearchRequest.getStartDate())) {
             return null;
         }
         if (!isNull(appointmentSearchRequest.getLimit())) {
