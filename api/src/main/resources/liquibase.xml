@@ -325,7 +325,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="Create-privilege-manage-appointment-service-availability-202510101200" author="Bahmni">
+    <changeSet id="Create-privilege-appointment-service-availability-202510101200" author="Bahmni">
         <preConditions onFail="MARK_RAN">
             <sqlCheck expectedResult="0">select count(*) from privilege where privilege='app:appointments:manageServiceAvailability'</sqlCheck>
         </preConditions>
