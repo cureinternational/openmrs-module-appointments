@@ -327,6 +327,23 @@ public class AppointmentDaoImplIT extends BaseIntegrationTest {
     }
 
     @Test
+    public void shouldReturnAppointmentsBasedOnAppointmentSearchRequestModelSTATPriority() {
+
+        AppointmentSearchRequestModel searchQuery = new AppointmentSearchRequestModel();
+        List<String> priorities = new ArrayList<>();
+        priorities.add("STAT");
+
+        searchQuery.setPriorities(priorities);
+        searchQuery.setStatus(null);
+
+        List<Appointment> appointments = appointmentDao.search(searchQuery);
+
+        assertNotNull(appointments);
+        assertEquals(1, appointments.size());
+        assertEquals(AppointmentPriority.STAT, appointments.get(0).getPriority());
+    }
+
+    @Test
     public void shouldReturnEmptyAppointmentsBasedOnAppointmentSearchRequestModelProviderWhenNoAppointmentsAreAssignedToProvider() {
 
         AppointmentSearchRequestModel searchQuery = new AppointmentSearchRequestModel();
