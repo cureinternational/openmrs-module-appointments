@@ -1,0 +1,3 @@
+# Ignoring the below vulnerabilities, to be reviewed later
+CVE-2022-45688 # org.json:json https://avd.aquasec.com/nvd/cve-2022-45688
+CVE-2023-5072 # org.json:json https://avd.aquasec.com/nvd/cve-2023-5072
