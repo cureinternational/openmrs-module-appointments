@@ -132,7 +132,6 @@ public class AppointmentsServiceImplTest {
 
     @Mock
     private AppointmentNumberGeneratorLocator appointmentNumberGeneratorLocator;
-
     @InjectMocks
     private AppointmentsServiceImpl appointmentsService;
 
